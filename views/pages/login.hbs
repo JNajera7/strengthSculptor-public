@@ -1,0 +1,29 @@
+{{> message}}
+<div style="min-height: 90vh; display: flex;">
+	<div class="container-md loginreg shadow-lg">
+		<a href="/home" class="btn-close position-absolute top-0 end-0 m-5" aria-label="Close"></a>
+		<div class="row flex-column flex-md-row">
+			<div class="col-md-5 order-2 order-md-1" id="insideLoginDiv">
+				<h1 id="title">Strength Sculptor</h1>
+				<h4 id="header">Log in</h4>
+				<form action="/login" method="post" class="py-4" id="loginForm">
+					<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+					<div class="form-group pb-4">
+						<input type="text" class="form-control" required id="username" name="username"
+							placeholder="Username">
+					</div>
+					<div class="form-group pb-4">
+						<input type="password" class="form-control" required id="password" name="password"
+							placeholder="Password">
+					</div>
+					<button type="submit" class="btn btn-primary">Login</button>
+				</form>
+				<p style="font-weight: 500;">New to the Strength Sculptor? <a href="/register">Create an account</a>
+				</p>
+			</div>
+			<div class="col-md-6 d-flex justify-content-center order-1 order-md-2" id="fullLogo">
+				<img src="images/SSLogo.svg" alt="Strength Sculptor Logo">
+			</div>
+		</div>
+	</div>
+</div>

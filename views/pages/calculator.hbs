@@ -1,0 +1,189 @@
+<div class="pageBody">
+  <!-- First Container -->
+  <div class="container-md calculatorDiv">
+    <div class="row">
+      <!-- Left Column: Form -->
+      <h3 class="mb-3">Strength Calculator</h3>
+      <div class="col-md-6 order-2 order-md-1">
+        <form class="needs-validation" id="strengthForm" novalidate>
+          <div class="mb-5 fs-6">
+            <!-- Gender Selection -->
+            <div class="mb-3">
+              <label for="gender">Gender</label>
+              <select class="form-select" id="gender" required>
+                <option value="" {{#unless user}}selected{{/unless}} disabled>Select</option>
+                <option value="Male" {{#if (eq user.gender 'Male' )}}selected{{/if}}>Male</option>
+                <option value="Female" {{#if (eq user.gender 'Female' )}}selected{{/if}}>Female</option>
+              </select>
+
+              <div class="invalid-feedback">
+                Please select a valid gender.
+              </div>
+            </div>
+
+            <!-- Bodyweight Input -->
+            <label for="bodyweight">Bodyweight</label>
+            <div class="input-group mb-3">
+              <input type="number" class="form-control rounded-start" id="bodyweight" required {{#if
+                user}}value="{{user.bodyweight}}" {{/if}} />
+              <button id="unitDropdown" class="btn btn-outline-secondary dropdown-toggle rounded-end" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                lbs
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#" onclick="setUnitBodyweight('lbs')">lbs</a></li>
+                <li><a class="dropdown-item" href="#" onclick="setUnitBodyweight('kg')">kg</a></li>
+              </ul>
+              <div class="invalid-feedback">
+                Bodyweight required.
+              </div>
+            </div>
+
+            <!-- Lift Weight Input -->
+            <label for="liftWeight">Lift Weight</label>
+            <div class="input-group">
+              <input type="number" class="form-control rounded-start" id="liftWeight" required disabled />
+              <button id="unitDropdown2" class="btn btn-outline-secondary dropdown-toggle rounded-end" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false" disabled>
+                lbs
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#" onclick="setUnitLift('lbs')">lbs</a></li>
+                <li><a class="dropdown-item" href="#" onclick="setUnitLift('kg')">kg</a></li>
+              </ul>
+              <div class="invalid-feedback">
+                Lift weight required.
+              </div>
+            </div>
+            <div id="dumbbellNoti" style="font-style: italic; color:rgb(80, 80, 80);" class="mb-2" hidden>Enter the
+              total weight of both
+              dumbbells</div>
+
+            <!-- Lift Repetitions -->
+            <label for="liftReps" class="mt-3">Lift Repetitions</label>
+            <input class="form-control mb-3" type="number" id="liftReps" required disabled />
+
+            <div class="form-check mb-3 d-flex align-items-center">
+              <input class="form-check-input" type="checkbox" value="" id="addToData"
+                style="margin-right: 8px; margin-bottom: 4px;" {{#unless user}}disabled{{/unless}}>
+              <label class="form-check-label" for="addToData" style="margin-right: 8px; margin-bottom: 1px;">
+                Save this data to my profile
+              </label>
+              <button type="button" class="btn btn-link p-0" data-bs-toggle="popover"
+                data-bs-content="Overwrites your exercise data and updates the muscle group's percentile for the dashboard"
+                data-bs-trigger="click" style="color: rgb(172, 172, 172);">
+                <i class="fa-solid fa-circle-info fs-5"></i>
+              </button>
+            </div>
+
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary mb-1">Calculate Strength</button>
+
+          </div>
+        </form>
+
+      </div>
+
+      <!-- Right Column: Exercise Selector -->
+
+
+      <div class="col-md-6 order-1 order-md-2 dropdown-container position-relative" id="exerciseSelector">
+        <button class="btn btn-outline-primary w-100" id="dropdownToggle">
+          Select an exercise
+        </button>
+
+        <div class="dropdown-panel border rounded bg-white p-3 position-absolute w-100 mt-1 shadow"
+          style="display: none; z-index: 1000;">
+          <input type="text" placeholder="Search exercises..." class="form-control mb-2" id="searchInput">
+
+          <div class="row mb-2">
+            <div class="col-4 pe-1">
+              <select id="muscleGroupFilter" class="form-select mb-2">
+                <option value="">Group</option>
+                <option value="Chest">Chest</option>
+                <option value="Legs">Legs</option>
+                <option value="Back">Back</option>
+                <option value="Shoulders">Shoulders</option>
+                <option value="Core">Core</option>
+                <option value="Arms">Arms</option>
+              </select>
+            </div>
+            <div class="col-4 px-1">
+              <select id="equipmentFilter" class="form-select mb-2">
+                <option value="">Gear</option>
+                <option value="Barbell">Barbell</option>
+                <option value="Dumbbell">Dumbbell</option>
+                <option value="Machine">Machine</option>
+                <option value="Cable">Cable</option>
+                <option value="Bodyweight">Bodyweight</option>
+              </select>
+            </div>
+            <div class="col-4 ps-1">
+              <select id="individualMuscleFilter" class="form-select mb-2">
+                <option value="">Muscle</option>
+                <option value="Upper Chest">Upper Chest</option>
+                <option value="Lower Chest">Lower Chest</option>
+                <option value="Front Delts">Front Delts</option>
+                <option value="Middle Delts">Middle Delts</option>
+                <option value="Rear Delts">Rear Delts</option>
+                <option value="Biceps">Biceps</option>
+                <option value="Triceps">Triceps</option>
+                <option value="Forearms">Forearms</option>
+                <option value="Upper Back">Upper Back</option>
+                <option value="Lower Back">Lower Back</option>
+                <option value="Lats">Lats</option>
+                <option value="Traps">Traps</option>
+                <option value="Abdominals">Abdominals</option>
+                <option value="Obliques">Obliques</option>
+                <option value="Quadriceps">Quadriceps</option>
+                <option value="Hamstrings">Hamstrings</option>
+                <option value="Glutes">Glutes</option>
+                <option value="Calves">Calves</option>
+                <option value="Abductors">Abductors</option>
+                <option value="Adductors">Adductors</option>
+              </select>
+            </div>
+          </div>
+
+          <ul id="exerciseList" class="list-group" style="max-height: 200px; overflow-y: auto;"></ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CALCULATOR RESULT CONTAINER -->
+  <div class="container calculatorDiv" id="resultsContainer" hidden>
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <h3 style="margin-bottom: 5%;"></h3>
+          <div id="medals"></div>
+        </div>
+        <div class="col-md-6 mb-3" style="margin-top: 1%;" id="resultDiv">
+          <h4 id="result1RM"></h4>
+          <h4 id="resultPercentile"></h4>
+        </div>
+      </div>
+    </div>
+    <table class="table table-sm" style="margin-bottom: 5%;">
+      <thead>
+        <tr>
+          <th scope="col"><span class="long">Your 1RM</span><span class="short">1RM</span></th>
+          <th scope="col"><span class="long">Beginner</span><span class="short">Beg.</span></th>
+          <th scope="col"><span class="long">Intermediate</span><span class="short">Int.</span></th>
+          <th scope="col"><span class="long">Advanced</span><span class="short">Adv.</span></th>
+          <th scope="col"><span class="long">Pro-Level</span><span class="short">Pro</span></th>
+          <th scope="col"><span class="long">World-Class</span><span class="short">WC</span></th>
+        </tr>
+      </thead>
+      <tbody id="results-body">
+        <!-- JS will insert rows here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<script src="/js/calculator.js"></script>

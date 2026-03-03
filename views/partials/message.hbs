@@ -1,0 +1,5 @@
+{{#if message}}
+  <div class="alert alert-{{#if error}}danger{{else}}success{{/if}} custom-alert" role="alert"> <!-- Changed to have more control over the styling of the alert message -->
+    {{ message }}
+  </div>
+{{/if}}

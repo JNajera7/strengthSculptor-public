@@ -1,0 +1,112 @@
+<nav class="navbar navbar-expand bg-body-tertiary shadow" style="height: 60px; position: relative;">
+  <div class="container-fluid d-flex align-items-center" style="justify-content: space-between;">
+    <!-- Brand (left) -->
+    <a class="navbar-brand d-flex align-items-center" href="/home"
+      style="gap: 0; height: 100%; display: flex; align-items: center;">
+      <img src="/images/SSLogoSmall.svg" alt="Strength Sculptor logo" height="50" id="navbarLogo" />
+      <span id="title">Strength Sculptor</span>
+    </a>
+
+    <!-- Links (absolutely centered) -->
+    <div class="navbar-nav nav-underline d-flex"
+      style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); gap: 1rem;">
+      <a class="nav-item nav-link d-none d-md-inline {{#if isHome}}active{{/if}}" href="/home"
+        style="vertical-align: middle;">
+        <i class="fa-solid fa-chart-line"></i> Dashboard
+      </a>
+      <a class="nav-item nav-link d-none d-md-inline {{#if isCalculator}}active{{/if}}" href="/calculator">
+        <i class="fa-solid fa-calculator"></i> Strength Calculator
+      </a>
+      <a class="nav-item nav-link d-none d-md-inline {{#if isExercises}}active{{/if}}" href="/exercises">
+        <i class="fa-solid fa-dumbbell"></i> Exercises
+      </a>
+      <a class="nav-item nav-link d-none d-md-inline {{#if isAbout}}active{{/if}}" href="/about">
+        <i class="fa-solid fa-magnifying-glass"></i> About
+      </a>
+    </div>
+
+    <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"
+      style="position: absolute; right: 7.5rem;">
+      <i class="fa-solid fa-user"></i> My Account
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered  modal-dialog-scrollable">
+        <form action="/api/save-user-stats" method="POST">
+          <div class="modal-content shadow-lg">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Account Settings</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row align-items-start">
+                <div class="col">
+                  <p class="mb-4">Gender:</p>
+                  <p>Bodyweight:</p>
+                </div>
+                <div class="col">
+                  <select class="form-select form-select-sm mb-3" aria-label="Small select example" name="genderInput" {{#unless user}}disabled{{/unless}}>
+                    <option value="" {{#unless user}}selected{{/unless}}>Select</option>
+                    <option value="Male" {{#if (eq user.gender 'Male' )}}selected{{/if}}>Male</option>
+                    <option value="Female" {{#if (eq user.gender 'Female' )}}selected{{/if}}>Female</option>
+                  </select>
+
+                  <div class="input-group mb-3">
+                    <input type="number" class="form-control rounded-start" id="bodyweightInput" required {{#if
+                      user}}value="{{user.bodyweight}}" {{/if}} name="bodyweightInput" {{#unless user}}disabled{{/unless}}/>
+                    <!-- Hidden input that the form will submit -->
+                    <input type="hidden" name="unit" id="unit" value="lbs">
+
+                    <!-- Visible dropdown button -->
+                    <div class="btn-group">
+                      <button id="unitDropdown" type="button"
+                        class="btn btn-outline-secondary dropdown-toggle rounded-end" data-bs-toggle="dropdown"
+                        aria-expanded="false" {{#unless user}}disabled{{/unless}}>
+                        lbs
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-end" id="unitDropdownMenu">
+                        <li><a class="dropdown-item" href="#" data-unit="lbs">lbs</a></li>
+                        <li><a class="dropdown-item" href="#" data-unit="kg">kg</a></li>
+                      </ul>
+                    </div>
+
+                    <div class="invalid-feedback">
+                      Bodyweight required.
+                    </div>
+                  </div>
+                </div>
+                <p style="font-style: italic; color:rgb(80, 80, 80);">Settings will auto-apply in the
+                  Strength
+                  Calculator.</p>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Logout (right) -->
+    <form action="/logout" method="POST" class="d-flex align-items-center" id="navbarLogout">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button class="btn btn-sm" type="submit">
+        <i class="fas fa-sign-out-alt"></i> {{#if user}}Log out{{else}}Log In{{/if}}
+      </button>
+    </form>
+  </div>
+</nav>
+
+<div class="nav-scroll-container">
+  <div class="nav-scroll" id="bubbleNav">
+    <div class="scroll-buffer-left"></div>
+    <a class="bubble{{#if isHome}} active{{/if}}" href="/home">Dashboard</a>
+    <a class="bubble{{#if isCalculator}} active{{/if}}" href="/calculator">Strength Calculator</a>
+    <a class="bubble{{#if isExercises}} active{{/if}}" href="/exercises">Strength Calculator</a>
+    <a class="bubble{{#if isAbout}} active{{/if}}" href="/about">About</a>
+    <div class="scroll-buffer-right"></div>
+  </div>
+</div>

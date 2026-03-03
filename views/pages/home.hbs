@@ -1,0 +1,88 @@
+<div class="pageBody {{#unless user}}overlay{{/unless}}">
+
+	{{#unless user}}
+	<div class="overlayMessage" id="signupSuggestion">
+		<button class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close"
+			id="closeSignupSuggestion"></button>
+		Sign up now to get personalized insights and optimize your workouts.
+		<form action="/register" method="get">
+			<button type="submit" class="btn btn-danger btn-lg shadow">Start training</button>
+		</form>
+	</div>
+	{{/unless}}
+
+	<div class="homeDashboard">
+		<div id="analytics">
+			<a id="analyticsHeader">{{#if user}}Your muscle group analysis:{{else}}Sample data:{{/if}}</a>
+			<canvas id="analyticsChart"></canvas>
+		</div>
+
+		<div class="homeCard">
+			<div class="chartCard" style="height: 170px;">
+				<a id="weakTitle">Weakest Muscle Group: </a>
+				<canvas id="weakChart"></canvas>
+			</div>
+			<div class="chartCard" style="height: 170px;">
+				<div><a id="strongTitle">Strongest Muscle Group: </a></div>
+				<canvas id="strongChart"></canvas>
+			</div>
+		</div>
+	</div>
+
+	<!-- authentication state checker -->
+	<div id="auth-data" data-user-signed-in="{{#if user}}true{{else}}false{{/if}}" style="display:none"></div>
+</div>
+
+<div id="news" class="container" style="margin-top: 1rem;">
+	<h2>Latest Training Insights</h2>
+	<p>Learn about strength standards, training tips, and how to reach your goals.</p>
+	{{!-- Later: loop through articles/posts --}}
+	<div class="d-flex overflow-auto" style="gap: 1rem; scroll-snap-type: x mandatory; padding-bottom: 1rem;">
+		<a href="https://www.healthline.com/nutrition/protein-shake-before-or-after-workout" target="_blank"
+			rel="noopener" class="text-decoration-none">
+			<div class="card flex-shrink-0" style="scroll-snap-align: start; cursor: pointer; width: 22rem;">
+				<img src="images/Protein Scoop.jpg" class="card-img-top" alt="Scoop of whey protein">
+				<div class="card-body">
+					<h5 class="card-title">Should You Have a Protein Shake Before or After Your Workout?</h5>
+					<p class="card-text">See what science says about timing your protein.</p>
+				</div>
+			</div>
+		</a>
+
+		<a href="https://www.healthline.com/health/progressive-overload" target="_blank" rel="noopener"
+			class="text-decoration-none">
+			<div class="card flex-shrink-0" style="scroll-snap-align: start; cursor: pointer; width: 22rem;">
+				<img src="images/Squat-Rack.jpg" class="card-img-top" alt="Scoop of whey protein">
+				<div class="card-body">
+					<h5 class="card-title">What Is Progressive Overload Training?</h5>
+					<p class="card-text">Explore the key training principle for maximizing strength.</p>
+				</div>
+			</div>
+		</a>
+
+		<a href="https://www.healthline.com/health/exercise-fitness/hypertrophy-vs-strength#benefits" target="_blank"
+			rel="noopener" class="text-decoration-none">
+			<div class="card flex-shrink-0" style="scroll-snap-align: start; cursor: pointer; width: 22rem;">
+				<img src="images/Dumbbell-Rack.jpg" class="card-img-top" alt="Scoop of whey protein">
+				<div class="card-body">
+					<h5 class="card-title">Benefits of strength training vs hypertrophy training</h5>
+					<p class="card-text">Is Strength Sculptor right for you?</p>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+<!-- Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"
+	integrity="sha384-XcdcwHqIPULERb2yDEM4R0XaQKU3YnDsrTmjACBZyfdVVqjh6xQ4/DCMd7XLcA6Y"
+	crossorigin="anonymous"></script>
+<!-- Chart annotation plugin -->
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"
+	integrity="sha384-kGkAqjRNVhkCHZAFOCquAF0AyllWaS2Iew5mgB0wxtPNrJlvXlMawVETclkjRilR"
+	crossorigin="anonymous"></script>
+<!-- Chart scripts -->
+<script src="/js/analyticsChart.js" defer></script> <!-- chain calls the below two scripts:
+	<script src="/js/weakChart.js"></script>
+	<script src="/js/strongChart.js"></script>
+	-->
