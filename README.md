@@ -9,9 +9,13 @@ Users can analyze individual exercises, track progress over time, and visualize 
 StrengthSculptor was built as a practical tool I personally use to track and analyze my strength progression, with data-driven insights and muscle group analytics.
 
 ---
+<p align="center">
+  <img src="public/images/Website_home.png" width="75%" />
+  <img src="public/images/calculator mobile.png" width="30%" />
+  <img src="public/images/settings mobile.png" width="30%" />
 
-<img src="public/images/Website_home.png" width="75%" />
-<img src="public/images/Website_calculator.png" width="75%" />
+</p>
+
 
 ---
 
